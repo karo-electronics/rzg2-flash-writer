@@ -1,0 +1,6 @@
+# build-dirs
+AArch64_obj/
+AArch64_output/
+
+# ide stuff
+.vscode
