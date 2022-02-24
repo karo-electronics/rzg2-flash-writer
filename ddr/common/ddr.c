@@ -6,7 +6,7 @@
 
 // include
 #include <ddr_internal.h>
-#include	<cpg.h>
+#include <cpg.h>
 #include "cpudrv.h"
 
 #if (DDR4 == 1)
@@ -40,14 +40,18 @@
 
 #else
 
-#if (DDR_SIZE_1GB == 1)
+#if (BOARD == TXRZ)
+#include "param_mc_txrz.c"
+#elif (DDR_SIZE_1GB == 1)
 #include "param_mc_C-010_D3-02-2.c"
 #elif (DDR_SIZE_512MB_1PCS == 1)
 #include "param_mc_C-011_D3-01-2.c"
 #else
 #error "Unknown size."
 #endif
-#if (SWIZZLE_T3CL == 1)
+#if (BOARD == TXRZ)
+#include "param_swizzle_txrz.c"
+#elif (SWIZZLE_T3CL == 1)
 #include "param_swizzle_T3cl.c"
 #elif (SWIZZLE_T3BCUL == 1)
 #include "param_swizzle_T3bcul.c"
@@ -70,7 +74,12 @@
 
 void panic(void)
 {
+#if (PANIC_ON_TRAINING_FAIL == 1)
+	PutStr("ERROR: DDR setup failed. System halted.\r\n", 0);
 	while(1);
+#else
+	PutStr("ERROR: DDR setup failed. Ignoring.\r\n", 0);
+#endif
 }
 
 extern const uint32_t mc_init_tbl[MC_INIT_NUM][2];
@@ -107,7 +116,8 @@ void ddr_setup(void)
 	uint32_t	tmp;
 	int i;
 
-	INFO("BL2: setup DDR (Rev. %s)\n", ddr_get_version());
+	PutStr("Begin DDR setup.", 1);
+
 	// Step2 - Step11
 	cpg_active_ddr(disable_phy_clk);
 
@@ -197,6 +207,9 @@ void ddr_setup(void)
 
 	// Step32
 	rmw_mc_reg(DDRMC_R006, 0xFFFFFFF0, lp_auto_entry_en & 0xF);
+
+	PutStr("DDR setup done.", 1);
+
 }
 
 static void disable_phy_clk(void)
@@ -289,6 +302,9 @@ static void program_phy1(uint32_t sl_lanes, uint32_t byte_lanes)
 	mr2 = read_mc_reg(DDRMC_R010) & 0xFFFF;
 	if (dram == 2) {
 		// DDR4
+
+		PutStr("Configuring for DDR4.", 1);
+
 		mr1_wl_mask = (0x7 << 8) | (0x1 << 7);	// 0x78
 		mr2_wl_mask = 0x7 << 9;					// 0xe0
 		switch ((mr2 & mr2_wl_mask) >> 9) {
@@ -310,6 +326,8 @@ static void program_phy1(uint32_t sl_lanes, uint32_t byte_lanes)
 		}
 	} else {
 		// DDR3L, DDR3
+		PutStr("Configuring for DDR3L.", 1);
+
 		mr1_wl_mask = (0x1 << 9) | (0x1 << 7) | (0x1 << 6) | (0x1 << 2);
 		mr2_wl_mask = 0x3 << 9;
 		switch ((mr2 & mr2_wl_mask) >> 9) {

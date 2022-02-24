@@ -15,14 +15,14 @@
 
 /************************************************************************/
 /*									*/
-/*	Debug Seirial(SCIF ch0)						*/
+/*	Debug Serial(SCIF ch0)						*/
 /*									*/
 /************************************************************************/
 int32_t PutCharSCIF0(char outChar)
 {
 	while(!(0x60U & *((volatile uint16_t*)SCIF0_FSR)));
-	*((volatile unsigned char*)SCIF0_FTDR) = outChar;
 	*((volatile uint16_t*)SCIF0_FSR) &= ~0x60U;	/* TEND,TDFE clear */
+	*((volatile unsigned char*)SCIF0_FTDR) = outChar;
 	return(0);
 }
 

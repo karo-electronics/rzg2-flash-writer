@@ -48,6 +48,9 @@ void Main(void)
 {
 	uint32_t readDevId;
 
+	// call very first to init uart!
+	InitScif();
+
 	init_tzc_400_spimulti();
 
 	/* early setup Clock and Reset */
@@ -74,7 +77,7 @@ void Main(void)
 	gDumpStatus	= DISABLE;
 
 	InitRPC_Mode();
-	ReadQspiFlashID(&readDevId);	/* dummy	*/
+	ReadQspiFlashID(&readDevId);	/* dummy */
 
 	InitMain();
 	StartMess();
@@ -106,6 +109,9 @@ void StartMess( void )
 #endif
 #if (RZG2LC == 1)
 			PutStr("RZ/G2LC" ,1);
+#endif
+#if (BOARD == TXRZ)
+			PutStr(" Board : TXRZ", 1);
 #endif
 		break;
 		case RZV2L_DEVID:

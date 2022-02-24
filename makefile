@@ -26,6 +26,19 @@ DEVICE   = RZG2L
 DDR_TYPE = DDR4
 DDR_SIZE = 2GB_1PCS
 SWIZZLE  = T1BC
+else ifeq ("$(BOARD)", "TXRZ")
+#--------------------------------------
+# Ka-Ro RZ/G2L based TXRZ CoM
+#
+# no other params needed, since they
+# would lead to other include files
+# than what we need.
+# what a mess of software............
+#--------------------------------------
+FILENAME_ADD = _TXRZ
+DEVICE   = RZG2L
+DDR_TYPE = DDR3L
+DDR_SIZE = 1GB
 else ifeq ("$(BOARD)", "RZG2L_15MMSQ_DEV")
 #--------------------------------------
 # RZ/G2L 15MMSQ Dev board
@@ -164,6 +177,10 @@ ifeq ("$(INTERNAL_MEMORY_ONLY)", "")
 INTERNAL_MEMORY_ONLY = DISABLE
 endif
 
+ifeq ("$(PANIC_ON_TRAINING_FAIL)", "")
+PANIC_ON_TRAINING_FAIL = ENABLE
+endif
+
 ifeq ("$(INTERNAL_MEMORY_ONLY)", "ENABLE")
 DDR_TYPE = INTERNAL
 endif
@@ -269,6 +286,13 @@ ifeq ("$(SERIAL_FLASH)", "ENABLE")
 endif
 ifeq ("$(SERIAL_FLASH)", "DISABLE")
 	CFLAGS += -DSERIAL_FLASH=0
+endif
+
+ifeq ("$(PANIC_ON_TRAINING_FAIL)", "ENABLE")
+	CFLAGS += -DPANIC_ON_TRAINING_FAIL=1
+endif
+ifeq ("$(PANIC_ON_TRAINING_FAIL)", "DISABLE")
+	CFLAGS += -DPANIC_ON_TRAINING_FAIL=0
 endif
 
 ifeq ("$(EMMC)", "ENABLE")
