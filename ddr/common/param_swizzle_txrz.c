@@ -16,12 +16,12 @@ const uint32_t mc_odt_pins_tbl[4] = {
 
 const uint32_t mc_mr1_tbl[2] = {
 	0x00000266	,
-	0x00000040
+	0x00000000
 };
 
 const uint32_t mc_mr2_tbl[2] = {
 	0x00000600	,
-	0x00000400
+	0x00000200
 };
 
 const uint32_t mc_mr5_tbl[2] = {
@@ -37,7 +37,7 @@ const uint32_t mc_mr6_tbl[2] = {
 const uint32_t mc_phy_settings_tbl[MC_PHYSET_NUM][2] = {
 	{DDRMC_R040,	0x4F7F03B8	},
 	{DDRMC_R041,	0x00003C28	},
-	{DDRMC_R042,	0x00787828	},
+	{DDRMC_R042,	0x00003C28	},
 	{DDRMC_R043,	0x00000000	}
 };
 
