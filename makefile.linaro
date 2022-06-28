@@ -160,6 +160,11 @@ ifeq ("$(EMMC_IOV)", "")
 EMMC_IOV=1_8V
 endif
 
+# Select OTP_USE("ENABLE"or"DISABLE" )
+ifeq ("$(OTP_USE)", "")
+OTP_USE = ENABLE
+endif
+
 ifeq ("$(INTERNAL_MEMORY_ONLY)", "")
 INTERNAL_MEMORY_ONLY = DISABLE
 endif
@@ -278,6 +283,13 @@ ifeq ("$(EMMC)", "DISABLE")
 	CFLAGS += -DEMMC=0
 endif
 
+ifeq ("$(OTP_USE)", "ENABLE")
+	CFLAGS += -DOTP_USE=1
+endif
+ifeq ("$(OTP_USE)", "DISABLE")
+	CFLAGS += -DOTP_USE=0
+endif
+
 ifeq ("$(QSPI_IOV)", "1_8V")
 	CFLAGS += -DQSPI_IO_1_8V=1
 endif
@@ -369,6 +381,12 @@ SRC_FILE +=				\
 	emmc_write.c			\
 	emmc_erase.c			\
 	emmc_utility.c
+endif
+
+ifeq ("$(OTP_USE)", "ENABLE")
+SRC_FILE +=				\
+	dgotp.c				\
+	otp/otp_sys.c
 endif
 
 OBJ_FILE := $(addprefix $(OBJECT_DIR)/,$(patsubst %.c,%.o,$(SRC_FILE)))

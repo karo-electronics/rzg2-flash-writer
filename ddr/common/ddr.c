@@ -40,8 +40,10 @@
 
 #else
 
-#if (BOARD == TXRZ)
+#if (TXRZ == 1)
 #include "param_mc_txrz.c"
+#elif (QSRZ == 1)
+#include "param_mc_qsrz.c"
 #elif (DDR_SIZE_1GB == 1)
 #include "param_mc_C-010_D3-02-2.c"
 #elif (DDR_SIZE_512MB_1PCS == 1)
@@ -49,8 +51,10 @@
 #else
 #error "Unknown size."
 #endif
-#if (BOARD == TXRZ)
+#if (TXRZ == 1)
 #include "param_swizzle_txrz.c"
+#elif (QSRZ == 1)
+#include "param_swizzle_qsrz.c"
 #elif (SWIZZLE_T3CL == 1)
 #include "param_swizzle_T3cl.c"
 #elif (SWIZZLE_T3BCUL == 1)

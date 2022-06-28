@@ -39,6 +39,19 @@ FILENAME_ADD = _TXRZ
 DEVICE   = RZG2L
 DDR_TYPE = DDR3L
 DDR_SIZE = 1GB
+else ifeq ("$(BOARD)", "QSRZ")
+#--------------------------------------
+# Ka-Ro RZ/G2L based QSRZ CoM
+#
+# no other params needed, since they
+# would lead to other include files
+# than what we need.
+# what a mess of software............
+#--------------------------------------
+FILENAME_ADD = _QSRZ
+DEVICE   = RZG2L
+DDR_TYPE = DDR3L
+DDR_SIZE = 1GB
 else ifeq ("$(BOARD)", "RZG2L_15MMSQ_DEV")
 #--------------------------------------
 # RZ/G2L 15MMSQ Dev board
@@ -173,6 +186,11 @@ ifeq ("$(EMMC_IOV)", "")
 EMMC_IOV=1_8V
 endif
 
+# Select OTP_USE("ENABLE"or"DISABLE" )
+ifeq ("$(OTP_USE)", "")
+OTP_USE = ENABLE
+endif
+
 ifeq ("$(INTERNAL_MEMORY_ONLY)", "")
 INTERNAL_MEMORY_ONLY = DISABLE
 endif
@@ -288,6 +306,17 @@ ifeq ("$(SERIAL_FLASH)", "DISABLE")
 	CFLAGS += -DSERIAL_FLASH=0
 endif
 
+ifeq ("$(BOARD)", "TXRZ")
+	CFLAGS += -DTXRZ=1
+else
+	CFLAGS += -DTXRZ=0
+endif
+ifeq ("$(BOARD)", "QSRZ")
+	CFLAGS += -DQSRZ=1
+else
+	CFLAGS += -DQSRZ=0
+endif
+
 ifeq ("$(PANIC_ON_TRAINING_FAIL)", "ENABLE")
 	CFLAGS += -DPANIC_ON_TRAINING_FAIL=1
 endif
@@ -300,6 +329,13 @@ ifeq ("$(EMMC)", "ENABLE")
 endif
 ifeq ("$(EMMC)", "DISABLE")
 	CFLAGS += -DEMMC=0
+endif
+
+ifeq ("$(OTP_USE)", "ENABLE")
+	CFLAGS += -DOTP_USE=1
+endif
+ifeq ("$(OTP_USE)", "DISABLE")
+	CFLAGS += -DOTP_USE=0
 endif
 
 ifeq ("$(QSPI_IOV)", "1_8V")
@@ -393,6 +429,12 @@ SRC_FILE +=				\
 	emmc_write.c			\
 	emmc_erase.c			\
 	emmc_utility.c
+endif
+
+ifeq ("$(OTP_USE)", "ENABLE")
+SRC_FILE +=				\
+	dgotp.c				\
+	otp/otp_sys.c
 endif
 
 OBJ_FILE := $(addprefix $(OBJECT_DIR)/,$(patsubst %.c,%.o,$(SRC_FILE)))

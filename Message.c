@@ -52,5 +52,11 @@ const char *const AllHelpMess[ALL_HELP_MESS_LINE] = {
 				" F  [sadr] [eadr] [data]   fill memory",
 				" FL [sadr] [eadr] [data]   fill memory(LONG)",
 				" FX [sadr] [eadr] [data]   fill memory(LONG LONG)",
+#if OTP_USE == 1
+				"        One Time PROM acccess command",
+				" OTP_W          write OTP",
+				" OTP_R          read OTP",
+				" OTP_D          read OTP 64byte",
+#endif /* OTP_USE == 1 */
 				MESSAGE_END,
 };

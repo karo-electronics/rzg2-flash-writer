@@ -15,6 +15,9 @@
 #if EMMC == 1
 #include "dgemmc.h"
 #endif /* EMMC == 1 */
+#if OTP_USE == 1
+#include "dgotp.h"
+#endif /* OTP_USE == 1 */
 
 /********************************************************/
 /*        ROM TABLE                                     */
@@ -52,6 +55,11 @@ const com_menu MonCom[COMMAND_UNIT] = {
 	"F"			, dgFill_byte			,  0	,
 	"FL"			, dgFill_long			,  0	,
 	"FX"			, dgFill_longlong		,  0	,
+#if OTP_USE == 1
+	"OTP_W"			, dgOTP_write			,  0	,
+	"OTP_R"			, dgOTP_read			,  0	,
+	"OTP_D"			, dgOTP_dump			,  0	,
+#endif /* OTP_USE == 1 */
 	TBL_END			, 0				,  0
 };
 
