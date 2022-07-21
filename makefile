@@ -26,32 +26,38 @@ DEVICE   = RZG2L
 DDR_TYPE = DDR4
 DDR_SIZE = 2GB_1PCS
 SWIZZLE  = T1BC
-else ifeq ("$(BOARD)", "TXRZ")
+else ifeq ("$(BOARD)", "TXRZ-G2L0")
 #--------------------------------------
-# Ka-Ro RZ/G2L based TXRZ CoM
-#
-# no other params needed, since they
-# would lead to other include files
-# than what we need.
-# what a mess of software............
+# Ka-Ro RZ/G2L based TXRZ-G2L0 CoM
 #--------------------------------------
-FILENAME_ADD = _TXRZ
+FILENAME_ADD = _TXRZ-G2L0
 DEVICE   = RZG2L
 DDR_TYPE = DDR3L
 DDR_SIZE = 1GB
-else ifeq ("$(BOARD)", "QSRZ")
+else ifeq ("$(BOARD)", "TXRZ-G2L1")
 #--------------------------------------
-# Ka-Ro RZ/G2L based QSRZ CoM
-#
-# no other params needed, since they
-# would lead to other include files
-# than what we need.
-# what a mess of software............
+# Ka-Ro RZ/G2L based TXRZ-G2L1 CoM
 #--------------------------------------
-FILENAME_ADD = _QSRZ
+FILENAME_ADD = _TXRZ-G2L1
+DEVICE   = RZG2L
+DDR_TYPE = DDR3L
+DDR_SIZE = 512MB
+else ifeq ("$(BOARD)", "QSRZ-G2L0")
+#--------------------------------------
+# Ka-Ro RZ/G2L based QSRZ-G2L0 CoM
+#--------------------------------------
+FILENAME_ADD = _QSRZ-G2L0
 DEVICE   = RZG2L
 DDR_TYPE = DDR3L
 DDR_SIZE = 1GB
+else ifeq ("$(BOARD)", "QSRZ-G2L1")
+#--------------------------------------
+# Ka-Ro RZ/G2L based QSRZ-G2L1 CoM
+#--------------------------------------
+FILENAME_ADD = _QSRZ-G2L1
+DEVICE   = RZG2L
+DDR_TYPE = DDR3L
+DDR_SIZE = 512MB
 else ifeq ("$(BOARD)", "RZG2L_15MMSQ_DEV")
 #--------------------------------------
 # RZ/G2L 15MMSQ Dev board
@@ -306,15 +312,25 @@ ifeq ("$(SERIAL_FLASH)", "DISABLE")
 	CFLAGS += -DSERIAL_FLASH=0
 endif
 
-ifeq ("$(BOARD)", "TXRZ")
-	CFLAGS += -DTXRZ=1
+ifeq ("$(BOARD)", "TXRZ-G2L0")
+	CFLAGS += -DTXRZ_G2L0=1
 else
-	CFLAGS += -DTXRZ=0
+	CFLAGS += -DTXRZ_G2L0=0
 endif
-ifeq ("$(BOARD)", "QSRZ")
-	CFLAGS += -DQSRZ=1
+ifeq ("$(BOARD)", "TXRZ-G2L1")
+	CFLAGS += -DTXRZ_G2L1=1
 else
-	CFLAGS += -DQSRZ=0
+	CFLAGS += -DTXRZ_G2L1=0
+endif
+ifeq ("$(BOARD)", "QSRZ-G2L0")
+	CFLAGS += -DQSRZ_G2L0=1
+else
+	CFLAGS += -DQSRZ_G2L0=0
+endif
+ifeq ("$(BOARD)", "QSRZ-G2L1")
+	CFLAGS += -DQSRZ_G2L1=1
+else
+	CFLAGS += -DQSRZ_G2L1=0
 endif
 
 ifeq ("$(PANIC_ON_TRAINING_FAIL)", "ENABLE")

@@ -40,10 +40,14 @@
 
 #else
 
-#if (TXRZ == 1)
-#include "param_mc_txrz.c"
-#elif (QSRZ == 1)
-#include "param_mc_qsrz.c"
+#if (TXRZ_G2L0 == 1)
+#include "param_mc_txrz-g2l0.c"
+#elif (TXRZ_G2L1 == 1)
+#include "param_mc_txrz-g2l1.c"
+#elif (QSRZ_G2L0 == 1)
+#include "param_mc_qsrz-g2l0.c"
+#elif (QSRZ_G2L1 == 1)
+#include "param_mc_qsrz-g2l1.c"
 #elif (DDR_SIZE_1GB == 1)
 #include "param_mc_C-010_D3-02-2.c"
 #elif (DDR_SIZE_512MB_1PCS == 1)
@@ -51,10 +55,14 @@
 #else
 #error "Unknown size."
 #endif
-#if (TXRZ == 1)
-#include "param_swizzle_txrz.c"
-#elif (QSRZ == 1)
-#include "param_swizzle_qsrz.c"
+#if (TXRZ_G2L0 == 1)
+#include "param_swizzle_txrz-g2l0.c"
+#elif (TXRZ_G2L1 == 1)
+#include "param_swizzle_txrz-g2l1.c"
+#elif (QSRZ_G2L0 == 1)
+#include "param_swizzle_qsrz-g2l0.c"
+#elif (QSRZ_G2L1 == 1)
+#include "param_swizzle_qsrz-g2l1.c"
 #elif (SWIZZLE_T3CL == 1)
 #include "param_swizzle_T3cl.c"
 #elif (SWIZZLE_T3BCUL == 1)

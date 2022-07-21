@@ -110,11 +110,17 @@ void StartMess( void )
 #if (RZG2LC == 1)
 			PutStr("RZ/G2LC" ,1);
 #endif
-#if (TXRZ == 1)
-			PutStr(" Board : TXRZ", 1);
+#if (TXRZ_G2L0 == 1)
+			PutStr(" Board : TXRZ-G2L0", 1);
 #endif
-#if (QSRZ == 1)
-			PutStr(" Board : QSRZ", 1);
+#if (TXRZ_G2L1 == 1)
+			PutStr(" Board : TXRZ-G2L1", 1);
+#endif
+#if (QSRZ_G2L0 == 1)
+			PutStr(" Board : QSRZ-G2L0", 1);
+#endif
+#if (QSRZ_G2L0 == 1)
+			PutStr(" Board : QSRZ-G2L1", 1);
 #endif
 		break;
 		case RZV2L_DEVID:
